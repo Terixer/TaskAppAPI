@@ -24,10 +24,3 @@ app.use(profileRouter);
 app.listen(port, () => {
     console.log('Server is serve on: ' + port);
 });
-
-
-const myFunction = async () => {
-
-};
-
-myFunction();

@@ -66,7 +66,7 @@ userSchema.methods.generateAuthToken = async function () {
     return token;
 };
 
-userSchema.methods.getPublicProfile = function () {
+userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
     const publicProperties = ['_id', 'email', 'age'];
