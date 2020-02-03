@@ -9,7 +9,7 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-        res.send({ user, token });
+        res.send({ user: user.getPublicProfile(), token });
     } catch (e) {
         res.status(400).send();
     }
@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
     try {
         await user.save();
         const token = await user.generateAuthToken();
-        res.status(201).send({ user, token });
+        res.status(201).send({ user: user.getPublicProfile(), token });
     } catch (error) {
         res.status(400).send(error);
     }

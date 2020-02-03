@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dataFilter = require('../utils/dataFilter');
 
 const SECRET_KEY = 'DlbNh9TMpe';
 
@@ -63,6 +64,14 @@ userSchema.methods.generateAuthToken = async function () {
     await user.save();
 
     return token;
+};
+
+userSchema.methods.getPublicProfile = function () {
+    const user = this;
+    const userObject = user.toObject();
+    const publicProperties = ['_id', 'email', 'age'];
+
+    return dataFilter.filterObjectByKeys(userObject, publicProperties);
 };
 
 userSchema.pre('save', async function (next) {
