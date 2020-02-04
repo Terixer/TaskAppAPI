@@ -15,6 +15,8 @@ const Task = mongoose.model('Task', {
         require: true,
         ref: 'User'
     }
+}, {
+    timestamps: true
 });
 
 module.exports = Task;
