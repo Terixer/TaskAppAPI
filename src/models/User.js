@@ -43,6 +43,12 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+});
+
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email });
 
@@ -69,7 +75,7 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
-    const publicProperties = ['_id', 'email', 'age'];
+    const publicProperties = ['_id', 'name', 'email', 'age'];
 
     return dataFilter.filterObjectByKeys(userObject, publicProperties);
 };
